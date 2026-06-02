@@ -1,17 +1,20 @@
+print("THIS IS THE NEW MAIN.PY")
+
 from commands.open_apps import open_app, open_downloads
 from commands.system_info import *
+from commands.memory import *
+from commands.voice import listen
 
-print("================================")
-print(" CLOVER AI v0.2 ")
-print("================================")
 
-while True:
+def process_command(command):
 
-    command = input("\nClover> ").lower()
+    command = command.lower().strip()
+
+    print(f"DEBUG: [{command}]")
 
     if command == "exit":
         print("Goodbye.")
-        break
+        return False
 
     elif command.startswith("open "):
 
@@ -66,5 +69,47 @@ while True:
     elif command == "lock pc":
         lock_pc()
 
+    elif command == "who am i":
+        print(who_am_i())
+
+    elif command == "show profile":
+        print(show_profile())
+
+    elif command.startswith("add note "):
+
+        note = command.replace(
+            "add note ",
+            ""
+        )
+
+        print(add_note(note))
+
+    elif command == "show notes":
+        print(show_notes())
+
+    elif command == "voice":
+
+        print("Voice mode activated.")
+
+        voice_command = listen()
+
+        if voice_command:
+            process_command(voice_command)
+
     else:
         print("Command not recognized.")
+
+    return True
+
+
+print("================================")
+print(" CLOVER AI v0.3 ")
+print("================================")
+
+running = True
+
+while running:
+
+    command = input("\nClover> ")
+
+    running = process_command(command)

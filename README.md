@@ -1,7 +1,15 @@
-v0.1
-✓ Open applications
-✓ Check CPU
-✓ Check RAM
-✓ Check Disk
-✓ Show IP
+Clover AI
 
+A Python desktop assistant built as a learning project.
+
+Features:
+- Launch applications
+- System monitoring
+- Network information
+- Screenshot capture
+- Process listing
+- Battery monitoring
+- Internet connectivity checks
+
+Current Version:
+v0.2
