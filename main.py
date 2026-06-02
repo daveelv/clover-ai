@@ -75,6 +75,12 @@ def process_command(command):
     elif command == "show profile":
         print(show_profile())
 
+    elif command == "what do you know about me":
+
+        print(
+            what_do_you_know()
+        )
+
     elif command.startswith("add note "):
 
         note = command.replace(
@@ -95,6 +101,56 @@ def process_command(command):
 
         if voice_command:
             process_command(voice_command)
+
+    elif command.startswith("remember "):
+
+        memory = command.replace(
+            "remember ",
+            ""
+        )
+
+        print(remember(memory))
+
+
+    elif command == "show memories":
+
+        print(show_memories())
+
+
+    elif command.startswith("forget "):
+
+        memory = command.replace(
+            "forget ",
+            ""
+        )
+
+        print(forget(memory))
+
+    elif command.startswith("add goal "):
+
+        goal = command.replace(
+            "add goal ",
+            ""
+        )
+
+        print(add_goal(goal))
+
+    elif command == "show goals":
+
+        print(show_goals())
+
+    elif command.startswith("add idea "):
+
+        idea = command.replace(
+            "add idea ",
+            ""
+        )
+
+        print(add_idea(idea))
+
+    elif command == "show ideas":
+
+        print(show_ideas())
 
     else:
         print("Command not recognized.")

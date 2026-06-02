@@ -1,54 +1,141 @@
 import json
 
+PROFILE_FILE = "memory/profile.json"
 
-PROFILE_PATH = "memory/profile.json"
-NOTES_PATH = "memory/notes.json"
+
+def load_profile():
+
+    try:
+        with open(PROFILE_FILE, "r") as file:
+            return json.load(file)
+
+    except FileNotFoundError:
+        return {}
+
+
+def save_profile(profile):
+
+    with open(PROFILE_FILE, "w") as file:
+        json.dump(profile, file, indent=4)
+
+
+def remember(memory):
+
+    profile = load_profile()
+
+    key = f"memory_{len(profile)}"
+
+    profile[key] = memory
+
+    save_profile(profile)
+
+    return f"Remembered: {memory}"
 
 
 def show_profile():
 
-    with open(PROFILE_PATH, "r") as file:
+    profile = load_profile()
 
-        profile = json.load(file)
+    output = ""
 
-    return json.dumps(profile, indent=4)
+    for key, value in profile.items():
+        output += f"{key}: {value}\n"
 
+    return output
 
-def who_am_i():
+def what_do_you_know():
 
-    with open(PROFILE_PATH, "r") as file:
+    profile = load_profile()
 
-        profile = json.load(file)
+    if not profile:
+        return "I do not know anything yet."
 
-    return (
-        f"Name: {profile['name']}\n"
-        f"Course: {profile['current_course']}\n"
-        f"Career Goal: {profile['career_goal']}"
-    )
+    output = []
 
+    output.append("Here is what I know about you:\n")
 
-def add_note(note):
+    for key, value in profile.items():
 
-    with open(NOTES_PATH, "r") as file:
+        output.append(
+            f"- {value}"
+        )
 
-        notes = json.load(file)
+    return "\n".join(output)
 
-    notes.append(note)
+def show_memories():
 
-    with open(NOTES_PATH, "w") as file:
+    profile = load_profile()
 
-        json.dump(notes, file, indent=4)
+    memories = []
 
-    return "Note saved."
+    for key, value in profile.items():
 
+        if key.startswith("memory_"):
 
-def show_notes():
+            memories.append(value)
 
-    with open(NOTES_PATH, "r") as file:
+    if not memories:
 
-        notes = json.load(file)
+        return "No memories stored."
 
-    if not notes:
-        return "No notes saved."
+    return "\n".join(memories)
 
-    return "\n".join(notes)
+def add_goal(goal):
+
+    with open(
+        "memory/goals.md",
+        "a",
+        encoding="utf-8"
+    ) as file:
+
+        file.write(f"- {goal}\n")
+
+    return "Goal saved."
+
+def show_goals():
+
+    try:
+
+        with open(
+            "memory/goals.md",
+            "r",
+            encoding="utf-8"
+        ) as file:
+
+            content = file.read()
+
+        return content if content else "No goals saved."
+
+    except FileNotFoundError:
+
+        return "No goals saved."
+
+def add_idea(idea):
+
+    with open(
+        "memory/ideas.md",
+        "a",
+        encoding="utf-8"
+    ) as file:
+
+        file.write(f"- {idea}\n")
+
+    return "Idea saved."
+
+def show_ideas():
+
+    try:
+
+        with open(
+            "memory/ideas.md",
+            "r",
+            encoding="utf-8"
+        ) as file:
+
+            content = file.read()
+
+        return content if content else "No ideas saved."
+
+    except FileNotFoundError:
+
+        return "No ideas saved."

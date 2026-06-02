@@ -1,0 +1,1 @@
+- build ai that manages my pc

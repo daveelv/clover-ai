@@ -1,0 +1,1 @@
+- become embedded system engineer
