@@ -16,3 +16,7 @@ def open_app(command):
 
     else:
         print("Application not recognized.")
+
+
+def open_downloads():
+    os.startfile(os.path.expanduser("~/Downloads"))
